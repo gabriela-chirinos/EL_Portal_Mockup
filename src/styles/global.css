@@ -158,8 +158,6 @@ nav {
   font-size: 0.52em; color: var(--yellow); display: block;
   margin-top: 6px; letter-spacing: 0;
 }
-/* arch motif removed */
-}
 .split-right {
   background: var(--cream); color: var(--dark);
   padding: 80px 60px;
