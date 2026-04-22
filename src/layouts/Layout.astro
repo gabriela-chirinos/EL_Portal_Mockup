@@ -1,0 +1,52 @@
+---
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+</head>
+<body>
+  <slot />
+</body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>
+
+<script>
+  // Scroll reveal
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.1 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Parallax
+  const ghostImg = document.getElementById('ghost-truck-img') as HTMLElement | null;
+  const truckPar = document.getElementById('truck-par-img') as HTMLElement | null;
+
+  function onScroll() {
+    const sy = window.scrollY;
+    if (ghostImg) ghostImg.style.transform = `translateY(${sy * 0.06}px)`;
+    if (truckPar) {
+      const wrap = truckPar.closest('.truck-parallax-wrap');
+      if (wrap) {
+        const rect = wrap.getBoundingClientRect();
+        const mid = rect.top + rect.height / 2 - window.innerHeight / 2;
+        truckPar.style.transform = `translateY(${mid * 0.15}px)`;
+      }
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
