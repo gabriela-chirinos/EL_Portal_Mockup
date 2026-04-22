@@ -1,0 +1,85 @@
+---
+import { menuData } from '../data/menu.ts';
+---
+
+<div class="menu-header-block" id="menu">
+  <div class="menu-header-top">
+    <div class="menu-header-left reveal">
+      <p class="overline">Flavor Profiles</p>
+      <h2 class="lineup-title">THE<br>LINEUP.</h2>
+    </div>
+  </div>
+  <div class="menu-header-sub reveal">
+    <div class="menu-header-right">
+      <p>Our menu is a rotating curation of premium ingredients meeting traditional heritage. No fillers, just soul.</p>
+    </div>
+  </div>
+</div>
+
+<div class="menu-tabs-section">
+  <div class="mtabs-nav">
+    {menuData.map((cat, i) => (
+      <button class={`mtab${i === 0 ? ' active' : ''}`} data-tab={cat.id}>
+        {cat.label}
+      </button>
+    ))}
+  </div>
+
+  {menuData.map((cat, i) => (
+    <div
+      class={`mtab-panel${i === 0 ? ' active' : ''}`}
+      id={`tab-${cat.id}`}
+      style={i !== 0 ? 'display:none' : ''}
+    >
+      <div class={`mpanel-inner${!cat.featuredImage ? ' mpanel-full' : ''}`}>
+        {cat.featuredImage && (
+          <div class="mpanel-featured">
+            <img src={cat.featuredImage} alt={cat.featuredCaption} class="mpanel-img" />
+            <div class="mpanel-img-caption">
+              <span class="mcat-label">{cat.featuredCaption}</span>
+            </div>
+          </div>
+        )}
+        <div class="mpanel-items">
+          <p class="mcat-label">{cat.featuredCaption ?? cat.label}</p>
+          {cat.items.map(item => (
+            <div class="mitem">
+              <div class="mitem-left">
+                <div class="mitem-name">
+                  {item.name}
+                  {item.badge && (
+                    <span class={`mbadge${item.badge.variant === 'green' ? ' mbadge-green' : item.badge.variant === 'yellow' ? ' mbadge-yellow' : ''}`}>
+                      {item.badge.label}
+                    </span>
+                  )}
+                </div>
+                <div class="mitem-desc">{item.desc}</div>
+              </div>
+              <div class="mitem-price">{item.price}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+<script>
+  document.querySelectorAll('.mtab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = (tab as HTMLElement).dataset.tab;
+      document.querySelectorAll('.mtab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.mtab-panel').forEach(p => {
+        p.classList.remove('active');
+        (p as HTMLElement).style.display = 'none';
+      });
+      tab.classList.add('active');
+      const panel = document.getElementById('tab-' + target);
+      if (panel) {
+        panel.style.display = 'block';
+        panel.offsetHeight;
+        panel.classList.add('active');
+      }
+    });
+  });
+</script>
