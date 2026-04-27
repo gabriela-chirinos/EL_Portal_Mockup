@@ -23,17 +23,17 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
+        working-directory: el-portal-site
         run: npm install
-        working-directory: el-portal-site # Add this
 
       - name: Build Astro
+        working-directory: el-portal-site
         run: npm run build
-        working-directory: el-portal-site # Add this
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./el-portal-site/dist 
+          path: ./el-portal-site/dist
 
   deploy:
     needs: build
