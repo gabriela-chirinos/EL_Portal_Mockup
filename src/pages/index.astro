@@ -43,46 +43,43 @@ import Footer from '../components/Footer.astro';
 </Layout>
 
 <script>
-  const bar  = document.getElementById('sticky-catering-bar');
+  const bar   = document.getElementById('sticky-catering-bar');
   const close = document.getElementById('scb-close');
   const link  = document.getElementById('scb-link');
 
-  // Start hidden; reveal only after hero leaves the viewport
-  bar?.classList.add('scb-hidden');
+  // Track both states; bar shows only when hero is gone AND catering is not visible
+  let heroVisible     = true;  // start true — page loads at top
+  let cateringVisible = false;
 
-  const hero    = document.getElementById('home');
-  const catering = document.getElementById('catering');
-
-  if (hero && bar) {
-    const heroObserver = new IntersectionObserver(
-      ([entry]) => {
-        // Show bar when hero scrolls out; hide when hero is back in view
-        if (!bar.classList.contains('scb-dismissed')) {
-          bar.classList.toggle('scb-hidden', entry.isIntersecting);
-        }
-      },
-      { threshold: 0.1 }
-    );
-    heroObserver.observe(hero);
+  function syncBar(): void {
+    if (!bar || bar.classList.contains('scb-dismissed')) return;
+    const shouldShow = !heroVisible && !cateringVisible;
+    bar.classList.toggle('scb-hidden', !shouldShow);
   }
 
-  // Also hide when catering section itself is on screen
-  if (catering && bar) {
-    const cateringObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (!bar.classList.contains('scb-dismissed')) {
-          if (entry.isIntersecting) bar.classList.add('scb-hidden');
-        }
-      },
-      { threshold: 0.2 }
-    );
-    cateringObserver.observe(catering);
+  // Start hidden (hero is visible on load)
+  bar?.classList.add('scb-hidden');
+
+  const hero     = document.getElementById('home');
+  const catering = document.getElementById('catering');
+
+  if (hero) {
+    new IntersectionObserver(
+      ([entry]) => { heroVisible = entry.isIntersecting; syncBar(); },
+      { threshold: 0.1 }
+    ).observe(hero);
+  }
+
+  if (catering) {
+    new IntersectionObserver(
+      ([entry]) => { cateringVisible = entry.isIntersecting; syncBar(); },
+      { threshold: 0.15 }
+    ).observe(catering);
   }
 
   // Dismiss permanently for this session
   close?.addEventListener('click', () => {
-    bar?.classList.add('scb-dismissed');
-    bar?.classList.add('scb-hidden');
+    bar?.classList.add('scb-dismissed', 'scb-hidden');
   });
 
   // Scroll to catering; on mobile also trigger the wizard
@@ -92,9 +89,7 @@ import Footer from '../components/Footer.astro';
     if (!section) return;
     section.scrollIntoView({ behavior: 'smooth' });
     if (window.innerWidth <= 768) {
-      setTimeout(() => {
-        document.getElementById('cmi-start')?.click();
-      }, 600);
+      setTimeout(() => document.getElementById('cmi-start')?.click(), 600);
     }
   });
 </script>

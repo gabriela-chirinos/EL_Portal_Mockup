@@ -11,21 +11,21 @@
     <li><a href="#location">Find Us</a></li>
   </ul>
   <button class="nav-cta" onclick="document.getElementById('order').scrollIntoView()">Order Now</button>
-
-  <!-- Hamburger toggle (mobile only) -->
-  <button
-    class="nav-hamburger"
-    id="nav-hamburger"
-    type="button"
-    aria-label="Open navigation"
-    aria-expanded="false"
-    aria-controls="nav-mobile-menu"
-  >
-    <span class="ham-bar"></span>
-    <span class="ham-bar"></span>
-    <span class="ham-bar"></span>
-  </button>
 </nav>
+
+<!-- Hamburger toggle — outside <nav> so its z-index beats the backdrop stacking context -->
+<button
+  class="nav-hamburger"
+  id="nav-hamburger"
+  type="button"
+  aria-label="Open navigation"
+  aria-expanded="false"
+  aria-controls="nav-mobile-menu"
+>
+  <span class="ham-bar"></span>
+  <span class="ham-bar"></span>
+  <span class="ham-bar"></span>
+</button>
 
 <!-- Mobile full-screen overlay -->
 <div
@@ -45,7 +45,7 @@
         <img src="/assets/svgLogo.svg" alt="El Portal Yelm" height="36" />
       </a>
       <button class="nmo-close" id="nmo-close" type="button" aria-label="Close navigation">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <svg width="20" height="20" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
           <line x1="2" y1="2" x2="20" y2="20"/>
           <line x1="20" y1="2" x2="2" y2="20"/>
         </svg>
@@ -89,74 +89,86 @@
 <!-- Backdrop -->
 <div class="nav-backdrop" id="nav-backdrop" aria-hidden="true"></div>
 
-<script>
-  const hamburger = document.getElementById('nav-hamburger');
-  const overlay   = document.getElementById('nav-mobile-menu');
-  const backdrop  = document.getElementById('nav-backdrop');
-  const closeBtn  = document.getElementById('nmo-close');
-  const orderBtn  = document.getElementById('nmo-order-btn');
-  const links     = overlay?.querySelectorAll<HTMLAnchorElement>('.nmo-link');
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function () {
+    var hamburger = document.getElementById('nav-hamburger');
+    var overlay   = document.getElementById('nav-mobile-menu');
+    var backdrop  = document.getElementById('nav-backdrop');
+    var closeBtn  = document.getElementById('nmo-close');
+    var orderBtn  = document.getElementById('nmo-order-btn');
+    var links     = overlay ? overlay.querySelectorAll('.nmo-link') : [];
 
-  let isOpen = false;
+    var isOpen = false;
 
-  function openMenu(): void {
-    isOpen = true;
-    overlay?.setAttribute('data-state', 'open');
-    backdrop?.classList.add('is-visible');
-    hamburger?.setAttribute('aria-expanded', 'true');
-    hamburger?.classList.add('is-active');
-    document.body.style.overflow = 'hidden';
-    // Focus first nav link after animation
-    setTimeout(() => {
-      (overlay?.querySelector<HTMLElement>('.nmo-link') as HTMLElement | null)?.focus();
-    }, 320);
-  }
+    function openMenu() {
+      isOpen = true;
+      if (overlay)  overlay.setAttribute('data-state', 'open');
+      if (backdrop) backdrop.classList.add('is-visible');
+      if (hamburger) {
+        hamburger.setAttribute('aria-expanded', 'true');
+        hamburger.setAttribute('aria-label', 'Close navigation');
+        hamburger.classList.add('is-active');
+      }
+      document.body.style.overflow = 'hidden';
+      setTimeout(function () {
+        var first = overlay && overlay.querySelector('.nmo-link');
+        if (first) first.focus();
+      }, 320);
+    }
 
-  function closeMenu(): void {
-    isOpen = false;
-    overlay?.setAttribute('data-state', 'closed');
-    backdrop?.classList.remove('is-visible');
-    hamburger?.setAttribute('aria-expanded', 'false');
-    hamburger?.classList.remove('is-active');
-    document.body.style.overflow = '';
-    hamburger?.focus();
-  }
+    function closeMenu() {
+      isOpen = false;
+      if (overlay)  overlay.setAttribute('data-state', 'closed');
+      if (backdrop) backdrop.classList.remove('is-visible');
+      if (hamburger) {
+        hamburger.setAttribute('aria-expanded', 'false');
+        hamburger.setAttribute('aria-label', 'Open navigation');
+        hamburger.classList.remove('is-active');
+        hamburger.focus();
+      }
+      document.body.style.overflow = '';
+    }
 
-  hamburger?.addEventListener('click', () => isOpen ? closeMenu() : openMenu());
-  closeBtn?.addEventListener('click', closeMenu);
-  backdrop?.addEventListener('click', closeMenu);
+    if (hamburger) {
+      hamburger.addEventListener('click', function () {
+        if (isOpen) closeMenu(); else openMenu();
+      });
+    }
+    if (closeBtn)  closeBtn.addEventListener('click', closeMenu);
+    if (backdrop)  backdrop.addEventListener('click', closeMenu);
 
-  // Close on nav link click
-  links?.forEach(link => {
-    link.addEventListener('click', () => {
-      closeMenu();
+    links.forEach(function (link) {
+      link.addEventListener('click', closeMenu);
     });
-  });
 
-  // Order button inside menu
-  orderBtn?.addEventListener('click', () => {
-    closeMenu();
-    setTimeout(() => document.getElementById('order')?.scrollIntoView({ behavior: 'smooth' }), 280);
-  });
+    if (orderBtn) {
+      orderBtn.addEventListener('click', function () {
+        closeMenu();
+        setTimeout(function () {
+          var el = document.getElementById('order');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      });
+    }
 
-  // Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && isOpen) closeMenu();
-  });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && isOpen) closeMenu();
+    });
 
-  // Focus trap
-  overlay?.addEventListener('keydown', (e: Event) => {
-    if ((e as KeyboardEvent).key !== 'Tab') return;
-    const focusable = Array.from(
-      overlay.querySelectorAll<HTMLElement>('a, button, [tabindex="0"]')
-    ).filter(el => !el.hasAttribute('disabled'));
-    if (!focusable.length) return;
-    const first = focusable[0];
-    const last  = focusable[focusable.length - 1];
-    if ((e as KeyboardEvent).shiftKey) {
-      if (document.activeElement === first) { last.focus(); e.preventDefault(); }
-    } else {
-      if (document.activeElement === last) { first.focus(); e.preventDefault(); }
+    if (overlay) {
+      overlay.addEventListener('keydown', function (e) {
+        if (e.key !== 'Tab') return;
+        var focusable = Array.from(overlay.querySelectorAll('a, button, [tabindex="0"]'))
+          .filter(function (el) { return !el.hasAttribute('disabled'); });
+        if (!focusable.length) return;
+        var first = focusable[0];
+        var last  = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) { last.focus(); e.preventDefault(); }
+        } else {
+          if (document.activeElement === last)  { first.focus(); e.preventDefault(); }
+        }
+      });
     }
   });
 </script>
