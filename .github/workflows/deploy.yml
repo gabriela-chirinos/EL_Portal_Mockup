@@ -13,9 +13,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: el-portal-site # This tells GitHub to run everything inside your subfolder
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,16 +23,19 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
+        # This tells npm exactly where your package.json is
         run: npm install
+        working-directory: ./el-portal-site
 
       - name: Build Astro
         run: npm run build
+        working-directory: ./el-portal-site
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # This points to the dist folder inside your subfolder
-          path: el-portal-site/dist
+          # Points to the dist folder inside your subfolder
+          path: ./el-portal-site/dist
 
   deploy:
     needs: build
