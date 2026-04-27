@@ -1,17 +1,100 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Marquee from '../components/Marquee.astro';
+import MenuSection from '../components/MenuSection.astro';
+import WordsSection from '../components/WordsSection.astro';
+import TruckSection from '../components/TruckSection.astro';
+import SignatureDishes from '../components/SignatureDishes.astro';
+import PanDulceFeature from '../components/PanDulceFeature.astro';
+import StorySection from '../components/StorySection.astro';
+import Reviews from '../components/Reviews.astro';
+import FindTruck from '../components/FindTruck.astro';
+import SocialSection from '../components/SocialSection.astro';
+import HoursLocation from '../components/HoursLocation.astro';
+import OrderCTA from '../components/OrderCTA.astro';
+import Footer from '../components/Footer.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="El Portal Yelm — Taqueria & Carniceria">
+  <Nav />
+  <Hero />
+  <Marquee />
+  <MenuSection />
+  <WordsSection />
+  <TruckSection />
+  <SignatureDishes />
+  <PanDulceFeature />
+  <StorySection />
+  <Reviews />
+  <FindTruck />
+  <SocialSection />
+  <HoursLocation />
+  <OrderCTA />
+  <Footer />
+
+  <!-- Sticky bottom catering CTA -->
+  <div id="sticky-catering-bar" aria-label="Catering inquiry shortcut">
+    <span class="scb-label">Need catering services?</span>
+    <a href="#catering" class="scb-btn" id="scb-link">Book Now →</a>
+    <button class="scb-close" id="scb-close" type="button" aria-label="Dismiss">×</button>
+  </div>
+</Layout>
+
+<script>
+  const bar  = document.getElementById('sticky-catering-bar');
+  const close = document.getElementById('scb-close');
+  const link  = document.getElementById('scb-link');
+
+  // Start hidden; reveal only after hero leaves the viewport
+  bar?.classList.add('scb-hidden');
+
+  const hero    = document.getElementById('home');
+  const catering = document.getElementById('catering');
+
+  if (hero && bar) {
+    const heroObserver = new IntersectionObserver(
+      ([entry]) => {
+        // Show bar when hero scrolls out; hide when hero is back in view
+        if (!bar.classList.contains('scb-dismissed')) {
+          bar.classList.toggle('scb-hidden', entry.isIntersecting);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    heroObserver.observe(hero);
+  }
+
+  // Also hide when catering section itself is on screen
+  if (catering && bar) {
+    const cateringObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (!bar.classList.contains('scb-dismissed')) {
+          if (entry.isIntersecting) bar.classList.add('scb-hidden');
+        }
+      },
+      { threshold: 0.2 }
+    );
+    cateringObserver.observe(catering);
+  }
+
+  // Dismiss permanently for this session
+  close?.addEventListener('click', () => {
+    bar?.classList.add('scb-dismissed');
+    bar?.classList.add('scb-hidden');
+  });
+
+  // Scroll to catering; on mobile also trigger the wizard
+  link?.addEventListener('click', (e) => {
+    e.preventDefault();
+    const section = document.getElementById('catering');
+    if (!section) return;
+    section.scrollIntoView({ behavior: 'smooth' });
+    if (window.innerWidth <= 768) {
+      setTimeout(() => {
+        document.getElementById('cmi-start')?.click();
+      }, 600);
+    }
+  });
+</script>

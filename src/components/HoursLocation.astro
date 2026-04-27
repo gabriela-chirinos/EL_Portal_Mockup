@@ -1,0 +1,90 @@
+---
+const hours = [
+  { day: 'Monday',    time: '10:00 AM – 8:00 PM' },
+  { day: 'Tuesday',   time: '10:00 AM – 8:00 PM' },
+  { day: 'Wednesday', time: '10:00 AM – 8:00 PM' },
+  { day: 'Thursday',  time: '10:00 AM – 8:00 PM' },
+  { day: 'Friday',    time: '10:00 AM – 9:00 PM' },
+  { day: 'Saturday',  time: '9:00 AM – 9:00 PM'  },
+  { day: 'Sunday',    time: '9:00 AM – 7:00 PM'  },
+];
+
+const ADDRESS        = '404 1st St S, Yelm, WA 98597';
+const ADDRESS_ENC    = encodeURIComponent(ADDRESS);
+const GMAPS_LISTING  = 'https://www.google.com/maps/place/El+Portal+Mexican+Store+and+Taco+truck/@46.9398128,-122.6116679,17z/data=!4m15!1m8!3m7!1s0x549113be5a6cff15:0xd88f79b06cb99c2b!2s404+1st+St+S,+Yelm,+WA+98597!3b1!8m2!3d46.9398069!4d-122.6093072!16s%2Fg%2F11bw3_ck4m!3m5!1s0x54911305ee2b96a7:0xfef99a3b735e64bc!8m2!3d46.9398128!4d-122.6094792!16s%2Fg%2F11mvsm8x0k?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D';
+const GMAPS_EMBED    = `https://maps.google.com/maps?q=${ADDRESS_ENC}&output=embed`;
+---
+<section class="hours-section" id="hours">
+  <div class="hours-left reveal">
+    <p class="overline">Hours</p>
+    <h2>WHEN<br>TO FIND<br>US.</h2>
+    <div class="hours-rows">
+      {hours.map(row => (
+        <div class="hr-row" data-day={row.day}>
+          <span class="day">{row.day}</span>
+          <span class="time">{row.time}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+  <div class="hours-right reveal" style="transition-delay:.12s" id="location">
+    <p class="overline">Location</p>
+    <div class="location-name">YELM,<br>WASHINGTON</div>
+    <div class="location-detail">404 1st St S Units D & E · Yelm, WA 98597</div>
+    <div class="location-phone">(360) 960-8405</div>
+    <div class="loc-btns">
+      <button class="btn-yel-solid" id="maps-directions-btn" type="button">Get Directions</button>
+      <a href="tel:+13609608405" class="btn-ghost-light">Call Us</a>
+    </div>
+    <!-- clicking opens Google Maps on desktop, native maps app on mobile -->
+    <div class="map-embed" id="map-embed-wrap" role="link" tabindex="0" aria-label="Open location in maps">
+      <iframe
+        title="El Portal Yelm location map"
+        src={GMAPS_EMBED}
+        width="100%"
+        height="180"
+        style="border:0;display:block;filter:grayscale(1) invert(0.9) contrast(1.1);pointer-events:none;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+      <div class="map-overlay" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const today = DAYS[new Date().getDay()];
+  document.querySelectorAll('.hr-row').forEach(row => {
+    if ((row as HTMLElement).dataset.day === today) {
+      row.classList.add('today');
+      const d = row.querySelector('.day');
+      if (d) d.textContent = today + ' →';
+    }
+  });
+
+  const ADDR_ENC  = encodeURIComponent('404 1st St S, Yelm, WA 98597');
+  const LISTING   = 'https://www.google.com/maps/place/El+Portal+Mexican+Store+and+Taco+truck/@46.9398128,-122.6116679,17z/data=!4m15!1m8!3m7!1s0x549113be5a6cff15:0xd88f79b06cb99c2b!2s404+1st+St+S,+Yelm,+WA+98597!3b1!8m2!3d46.9398069!4d-122.6093072!16s%2Fg%2F11bw3_ck4m!3m5!1s0x54911305ee2b96a7:0xfef99a3b735e64bc!8m2!3d46.9398128!4d-122.6094792!16s%2Fg%2F11mvsm8x0k?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D';
+
+  function openMaps(): void {
+    const ua = navigator.userAgent;
+    if (/iPad|iPhone|iPod/.test(ua)) {
+      window.location.href = `maps://?q=${ADDR_ENC}`;
+    } else if (/Android/.test(ua)) {
+      window.location.href = `geo:0,0?q=${ADDR_ENC}`;
+    } else {
+      window.open(LISTING, '_blank', 'noopener');
+    }
+  }
+
+  // Directions button
+  document.getElementById('maps-directions-btn')?.addEventListener('click', openMaps);
+
+  // Clicking the map embed
+  const mapWrap = document.getElementById('map-embed-wrap');
+  mapWrap?.addEventListener('click', openMaps);
+  mapWrap?.addEventListener('keydown', (e) => {
+    if ((e as KeyboardEvent).key === 'Enter' || (e as KeyboardEvent).key === ' ') openMaps();
+  });
+</script>

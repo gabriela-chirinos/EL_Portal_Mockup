@@ -11,4 +11,152 @@
     <li><a href="#location">Find Us</a></li>
   </ul>
   <button class="nav-cta" onclick="document.getElementById('order').scrollIntoView()">Order Now</button>
+
+  <!-- Hamburger toggle (mobile only) -->
+  <button
+    class="nav-hamburger"
+    id="nav-hamburger"
+    type="button"
+    aria-label="Open navigation"
+    aria-expanded="false"
+    aria-controls="nav-mobile-menu"
+  >
+    <span class="ham-bar"></span>
+    <span class="ham-bar"></span>
+    <span class="ham-bar"></span>
+  </button>
 </nav>
+
+<!-- Mobile full-screen overlay -->
+<div
+  class="nav-mobile-overlay"
+  id="nav-mobile-menu"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Site navigation"
+  data-state="closed"
+>
+  <!-- Ghost wordmark decoration -->
+  <div class="nmo-ghost" aria-hidden="true">EL PORTAL</div>
+
+  <div class="nmo-inner">
+    <div class="nmo-header">
+      <a href="/" class="nmo-logo-link" id="nmo-logo">
+        <img src="/assets/svgLogo.svg" alt="El Portal Yelm" height="36" />
+      </a>
+      <button class="nmo-close" id="nmo-close" type="button" aria-label="Close navigation">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="2" y1="2" x2="20" y2="20"/>
+          <line x1="20" y1="2" x2="2" y2="20"/>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="nmo-nav" aria-label="Primary navigation">
+      <a href="#menu"     class="nmo-link" data-delay="0">
+        <span class="nmo-num">01</span><span class="nmo-label">Menu</span>
+        <span class="nmo-arrow" aria-hidden="true">→</span>
+      </a>
+      <a href="#story"    class="nmo-link" data-delay="1">
+        <span class="nmo-num">02</span><span class="nmo-label">Our Story</span>
+        <span class="nmo-arrow" aria-hidden="true">→</span>
+      </a>
+      <a href="#hours"    class="nmo-link" data-delay="2">
+        <span class="nmo-num">03</span><span class="nmo-label">Hours</span>
+        <span class="nmo-arrow" aria-hidden="true">→</span>
+      </a>
+      <a href="#location" class="nmo-link" data-delay="3">
+        <span class="nmo-num">04</span><span class="nmo-label">Find Us</span>
+        <span class="nmo-arrow" aria-hidden="true">→</span>
+      </a>
+      <a href="#catering" class="nmo-link" data-delay="4">
+        <span class="nmo-num">05</span><span class="nmo-label">Catering</span>
+        <span class="nmo-arrow" aria-hidden="true">→</span>
+      </a>
+    </nav>
+
+    <div class="nmo-footer">
+      <button class="nmo-cta" id="nmo-order-btn" type="button">Order Now</button>
+      <div class="nmo-contact">
+        <a href="tel:+13609608405">(360) 960-8405</a>
+        <span>·</span>
+        <span>Yelm, WA</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Backdrop -->
+<div class="nav-backdrop" id="nav-backdrop" aria-hidden="true"></div>
+
+<script>
+  const hamburger = document.getElementById('nav-hamburger');
+  const overlay   = document.getElementById('nav-mobile-menu');
+  const backdrop  = document.getElementById('nav-backdrop');
+  const closeBtn  = document.getElementById('nmo-close');
+  const orderBtn  = document.getElementById('nmo-order-btn');
+  const links     = overlay?.querySelectorAll<HTMLAnchorElement>('.nmo-link');
+
+  let isOpen = false;
+
+  function openMenu(): void {
+    isOpen = true;
+    overlay?.setAttribute('data-state', 'open');
+    backdrop?.classList.add('is-visible');
+    hamburger?.setAttribute('aria-expanded', 'true');
+    hamburger?.classList.add('is-active');
+    document.body.style.overflow = 'hidden';
+    // Focus first nav link after animation
+    setTimeout(() => {
+      (overlay?.querySelector<HTMLElement>('.nmo-link') as HTMLElement | null)?.focus();
+    }, 320);
+  }
+
+  function closeMenu(): void {
+    isOpen = false;
+    overlay?.setAttribute('data-state', 'closed');
+    backdrop?.classList.remove('is-visible');
+    hamburger?.setAttribute('aria-expanded', 'false');
+    hamburger?.classList.remove('is-active');
+    document.body.style.overflow = '';
+    hamburger?.focus();
+  }
+
+  hamburger?.addEventListener('click', () => isOpen ? closeMenu() : openMenu());
+  closeBtn?.addEventListener('click', closeMenu);
+  backdrop?.addEventListener('click', closeMenu);
+
+  // Close on nav link click
+  links?.forEach(link => {
+    link.addEventListener('click', () => {
+      closeMenu();
+    });
+  });
+
+  // Order button inside menu
+  orderBtn?.addEventListener('click', () => {
+    closeMenu();
+    setTimeout(() => document.getElementById('order')?.scrollIntoView({ behavior: 'smooth' }), 280);
+  });
+
+  // Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) closeMenu();
+  });
+
+  // Focus trap
+  overlay?.addEventListener('keydown', (e: Event) => {
+    if ((e as KeyboardEvent).key !== 'Tab') return;
+    const focusable = Array.from(
+      overlay.querySelectorAll<HTMLElement>('a, button, [tabindex="0"]')
+    ).filter(el => !el.hasAttribute('disabled'));
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last  = focusable[focusable.length - 1];
+    if ((e as KeyboardEvent).shiftKey) {
+      if (document.activeElement === first) { last.focus(); e.preventDefault(); }
+    } else {
+      if (document.activeElement === last) { first.focus(); e.preventDefault(); }
+    }
+  });
+</script>

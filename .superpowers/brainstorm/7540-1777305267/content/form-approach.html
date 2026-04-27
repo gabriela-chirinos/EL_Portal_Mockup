@@ -1,0 +1,81 @@
+<h2>Mobile Catering Form — Which approach?</h2>
+<p class="subtitle">One input per step, full-screen on mobile. Pick the style that feels right for El Portal.</p>
+
+<div class="cards">
+
+  <!-- Option A: Dark/Branded Wizard -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0d1f0f;padding:20px;font-family:sans-serif;min-height:260px;display:flex;flex-direction:column;justify-content:space-between;">
+      <div>
+        <div style="font-size:10px;letter-spacing:0.2em;color:#d4a017;text-transform:uppercase;margin-bottom:8px">Step 2 of 6</div>
+        <div style="height:3px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:20px">
+          <div style="width:33%;height:100%;background:#d4a017;border-radius:2px"></div>
+        </div>
+        <div style="font-size:22px;font-weight:700;color:#f5f0e8;letter-spacing:0.05em;line-height:1.1;margin-bottom:4px">WHAT'S YOUR<br>EMAIL?</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:18px">We'll send confirmation here</div>
+        <input class="mock-input" placeholder="you@email.com" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);color:#f5f0e8;padding:14px;width:100%;font-size:16px;border-radius:0"/>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:20px">
+        <button class="mock-button" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);padding:10px 20px;font-size:12px">← Back</button>
+        <button class="mock-button" style="background:#d4a017;border:none;color:#0d1f0f;padding:10px 28px;font-size:14px;font-weight:700;letter-spacing:0.08em">NEXT →</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Branded Dark Wizard</h3>
+      <p>Full-screen steps matching El Portal's dark + yellow palette. Bold Bebas-style headings, progress bar at top, Back/Next navigation. Feels immersive and on-brand.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Clean Card Stack -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#f5f0e8;padding:20px;font-family:sans-serif;min-height:260px;display:flex;flex-direction:column;justify-content:space-between;">
+      <div>
+        <div style="display:flex;gap:6px;margin-bottom:18px">
+          <div style="height:4px;flex:1;background:#0d1f0f;border-radius:2px"></div>
+          <div style="height:4px;flex:1;background:#0d1f0f;border-radius:2px"></div>
+          <div style="height:4px;flex:1;background:#d4a017;border-radius:2px"></div>
+          <div style="height:4px;flex:1;background:#ddd;border-radius:2px"></div>
+          <div style="height:4px;flex:1;background:#ddd;border-radius:2px"></div>
+          <div style="height:4px;flex:1;background:#ddd;border-radius:2px"></div>
+        </div>
+        <div style="font-size:11px;color:#888;margin-bottom:6px;letter-spacing:0.1em;text-transform:uppercase">Your Phone</div>
+        <div style="font-size:28px;font-weight:700;color:#1a1a1a;line-height:1.1;margin-bottom:12px">Best number<br>to reach you?</div>
+        <input class="mock-input" placeholder="(360) 555-0100" style="background:#fff;border:2px solid #1a1a1a;color:#1a1a1a;padding:14px;width:100%;font-size:18px;border-radius:4px"/>
+        <div style="font-size:11px;color:#aaa;margin-top:8px">Format: (XXX) XXX-XXXX</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:20px;align-items:center">
+        <span style="font-size:12px;color:#888;cursor:pointer">← Back</span>
+        <button class="mock-button" style="background:#1a1a1a;border:none;color:#fff;padding:12px 32px;font-size:14px;border-radius:4px">Continue</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Clean Light Card</h3>
+      <p>Light cream background, dot-dash progress indicator across the top, friendly question copy, strong "Continue" CTA. More approachable, slightly less on-brand but easier to read on mobile.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Split Header + Form -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="font-family:sans-serif;min-height:260px;display:flex;flex-direction:column;">
+      <div style="background:#0d1f0f;padding:16px 20px 12px;">
+        <div style="font-size:9px;letter-spacing:0.22em;color:#d4a017;text-transform:uppercase;margin-bottom:4px">Catering Inquiry · 4 of 6</div>
+        <div style="font-size:20px;font-weight:700;color:#f5f0e8;letter-spacing:0.04em">YOUR EVENT DATE</div>
+      </div>
+      <div style="background:#f5f0e8;flex:1;padding:20px;display:flex;flex-direction:column;justify-content:space-between;">
+        <div>
+          <div style="font-size:13px;color:#555;margin-bottom:12px;line-height:1.5">When are you planning your event? We'll check our calendar and get back to you within 24 hours.</div>
+          <input type="date" class="mock-input" style="background:#fff;border:2px solid #0d1f0f;color:#1a1a1a;padding:14px;width:100%;font-size:16px;border-radius:0"/>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:20px">
+          <button class="mock-button" style="flex:1;background:transparent;border:2px solid #0d1f0f;color:#0d1f0f;padding:12px;font-size:13px">Back</button>
+          <button class="mock-button" style="flex:2;background:#d4a017;border:none;color:#0d1f0f;padding:12px;font-size:14px;font-weight:700;letter-spacing:0.08em">NEXT STEP</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Split Dark Header / Light Body</h3>
+      <p>Dark branded header bar with step label + question title, light body for the input. Best of both worlds — brand at the top, readable form below. Easiest to extend with helper text.</p>
+    </div>
+  </div>
+
+</div>

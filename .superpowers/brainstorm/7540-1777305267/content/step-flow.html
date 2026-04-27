@@ -1,0 +1,60 @@
+<h2>Step Flow — Does this sequence feel right?</h2>
+<p class="subtitle">One input per screen. The phone step is new. Click any step to flag it if you want to change it.</p>
+
+<div style="display:flex;flex-direction:column;gap:10px;max-width:520px;margin:0 auto">
+
+  <div class="option" data-choice="step1" onclick="toggleSelect(this)" style="cursor:pointer">
+    <div class="letter" style="background:#1a1a1a;color:#f5f0e8">1</div>
+    <div class="content">
+      <h3>Your Name</h3>
+      <p>Text input · Required · Placeholder: "Full name"</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="step2" onclick="toggleSelect(this)" style="cursor:pointer">
+    <div class="letter" style="background:#1a1a1a;color:#f5f0e8">2</div>
+    <div class="content">
+      <h3>Email Address</h3>
+      <p>Email input · Required · Validated format · Placeholder: "you@email.com"</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="step3" onclick="toggleSelect(this)" style="cursor:pointer">
+    <div class="letter" style="background:#d4a017;color:#1a1a1a">3</div>
+    <div class="content">
+      <h3>Phone Number <span style="font-size:11px;background:#d4a017;color:#1a1a1a;padding:2px 6px;border-radius:2px;margin-left:6px">NEW</span></h3>
+      <p>Tel input · Required · Validated (XXX) XXX-XXXX · Placeholder: "(360) 555-0100"</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="step4" onclick="toggleSelect(this)" style="cursor:pointer">
+    <div class="letter" style="background:#1a1a1a;color:#f5f0e8">4</div>
+    <div class="content">
+      <h3>Event Date</h3>
+      <p>Date picker · Optional · Min = tomorrow</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="step5" onclick="toggleSelect(this)" style="cursor:pointer">
+    <div class="letter" style="background:#1a1a1a;color:#f5f0e8">5</div>
+    <div class="content">
+      <h3>Guest Count</h3>
+      <p>Number input · Optional · Min 10 · Placeholder: "Est. guests"</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="step6" onclick="toggleSelect(this)" style="cursor:pointer">
+    <div class="letter" style="background:#1a1a1a;color:#f5f0e8">6</div>
+    <div class="content">
+      <h3>Event Details</h3>
+      <p>Textarea · Optional · "Location, type of event, any special requests..."</p>
+    </div>
+  </div>
+
+  <div style="border:2px dashed #ccc;border-radius:4px;padding:16px 20px;margin-top:4px;background:#fafafa">
+    <div style="font-size:12px;font-weight:700;color:#555;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px">✓ Final screen</div>
+    <div style="font-size:14px;color:#333">Review summary + "Send Inquiry" — shows all answers before submitting</div>
+  </div>
+</div>
+
+<p class="subtitle" style="margin-top:24px">Click any step you want to change, or type your feedback below.</p>

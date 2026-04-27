@@ -1,0 +1,576 @@
+---
+---
+<section class="findtruck-section" id="catering">
+  <div class="ft-left reveal">
+    <p class="overline">We're Out There</p>
+    <h2 class="ft-title">FIND<br>THE<br><span class="ft-yellow">TRUCK.</span></h2>
+    <p class="ft-sub">Follow us on social for daily location updates, specials, and behind-the-scenes from the kitchen.</p>
+    <div class="ft-socials">
+      <a href="https://www.facebook.com/ElPortalYelm" target="_blank" rel="noopener" class="ft-social-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        Facebook
+      </a>
+      <a href="https://www.instagram.com/elportalyelm" target="_blank" rel="noopener" class="ft-social-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        Instagram
+      </a>
+    </div>
+    <div class="ft-address">
+      <span class="overline" style="margin-bottom:8px;display:block">Home Base</span>
+      <div class="ft-addr-text">Yelm, Washington<br><small>(360) 960-8405</small></div>
+    </div>
+  </div>
+
+  <div class="ft-right reveal" style="transition-delay:.12s">
+    <div class="ft-form-wrap">
+      <p class="overline">Catering & Events</p>
+      <h3 class="ft-form-title">BRING EL PORTAL<br>TO YOUR EVENT.</h3>
+      <p class="ft-form-sub">Weddings, corporate events, birthdays, block parties — we bring the full experience to you.</p>
+      <!-- Replace YOUR_FORM_ID with your actual Formspree endpoint -->
+      <form
+        class="ft-form"
+        action="https://formspree.io/f/YOUR_FORM_ID"
+        method="POST"
+        id="catering-form"
+        data-pending="true"
+      >
+        <div class="ft-field">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" placeholder="Full name" required>
+        </div>
+        <div class="ft-field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@email.com" required>
+          <span class="ft-err" id="ft-email-err" aria-live="polite"></span>
+        </div>
+        <div class="ft-field">
+          <label for="ft-phone">Phone</label>
+          <input type="tel" id="ft-phone" name="phone" placeholder="(360) 555-0100" autocomplete="tel">
+          <span class="ft-err" id="ft-phone-err" aria-live="polite"></span>
+        </div>
+        <div class="ft-field-row">
+          <div class="ft-field">
+            <label for="date">Event Date</label>
+            <input type="date" id="date" name="event_date">
+          </div>
+          <div class="ft-field">
+            <label for="guests">Guest Count</label>
+            <input type="number" id="guests" name="guest_count" placeholder="Est. guests" min="10">
+          </div>
+        </div>
+        <div class="ft-field">
+          <label for="details">Tell Us About Your Event</label>
+          <textarea id="details" name="details" placeholder="Location, type of event, any special requests..." rows="3"></textarea>
+        </div>
+        <button type="submit" class="ft-submit">Send Inquiry</button>
+        <p class="ft-form-note" id="ft-success" style="display:none;color:var(--yellow);margin-top:8px;font-size:14px;"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Mobile intro header — visible ≤768px only -->
+<div id="catering-mobile-intro" aria-hidden="false">
+  <div class="cmi-inner">
+    <div class="cmi-overline">Weddings · Corporate · Birthdays</div>
+    <h3 class="cmi-title">BRING EL PORTAL<br>TO YOUR EVENT.</h3>
+    <p class="cmi-sub">Full experience, straight from our kitchen to your celebration.</p>
+    <button class="cmi-cta" id="cmi-start" type="button">GET STARTED →</button>
+  </div>
+</div>
+
+<!-- Mobile catering wizard — visible ≤768px only -->
+<div id="catering-wizard" role="form" aria-label="Catering inquiry" style="display:none">
+
+  <!-- Progress dots -->
+  <div class="cw-progress" id="cw-progress">
+    <span class="cw-dot" aria-label="Step 1 of 6"></span>
+    <span class="cw-dot" aria-label="Step 2 of 6"></span>
+    <span class="cw-dot" aria-label="Step 3 of 6"></span>
+    <span class="cw-dot" aria-label="Step 4 of 6"></span>
+    <span class="cw-dot" aria-label="Step 5 of 6"></span>
+    <span class="cw-dot" aria-label="Step 6 of 6"></span>
+  </div>
+
+  <!-- Step 1: Name -->
+  <div class="cw-step" id="cw-step-1">
+    <button class="cw-exit" id="cw-exit-1" type="button" aria-label="Exit form">×</button>
+    <div class="cw-overline">Step 1 of 6</div>
+    <h2 class="cw-question">What's your name?</h2>
+    <input class="cw-input" type="text" id="cw-name" name="name" placeholder="Full name" autocomplete="name" />
+    <span class="cw-err" id="cw-name-err" aria-live="polite" aria-describedby="cw-name"></span>
+    <div class="cw-nav">
+      <span></span>
+      <button class="cw-continue" id="cw-next-1" type="button">Continue</button>
+    </div>
+  </div>
+
+  <!-- Step 2: Email -->
+  <div class="cw-step" id="cw-step-2" style="display:none">
+    <button class="cw-exit" id="cw-exit-2" type="button" aria-label="Exit form">×</button>
+    <div class="cw-overline">Step 2 of 6</div>
+    <h2 class="cw-question">Your email address?</h2>
+    <input class="cw-input" type="email" id="cw-email" name="email" placeholder="you@email.com" autocomplete="email" />
+    <span class="cw-err" id="cw-email-err" aria-live="polite" aria-describedby="cw-email"></span>
+    <div class="cw-nav">
+      <button class="cw-back" id="cw-back-2" type="button">← Back</button>
+      <button class="cw-continue" id="cw-next-2" type="button">Continue</button>
+    </div>
+  </div>
+
+  <!-- Step 3: Phone -->
+  <div class="cw-step" id="cw-step-3" style="display:none">
+    <button class="cw-exit" id="cw-exit-3" type="button" aria-label="Exit form">×</button>
+    <div class="cw-overline">Step 3 of 6</div>
+    <h2 class="cw-question">Best number to reach you?</h2>
+    <input class="cw-input" type="tel" id="cw-phone" name="phone" placeholder="(360) 555-0100" autocomplete="tel" />
+    <span class="cw-err" id="cw-phone-err" aria-live="polite" aria-describedby="cw-phone"></span>
+    <div class="cw-nav">
+      <button class="cw-back" id="cw-back-3" type="button">← Back</button>
+      <button class="cw-continue" id="cw-next-3" type="button">Continue</button>
+    </div>
+  </div>
+
+  <!-- Step 4: Event date (optional) -->
+  <div class="cw-step" id="cw-step-4" style="display:none">
+    <button class="cw-exit" id="cw-exit-4" type="button" aria-label="Exit form">×</button>
+    <div class="cw-overline">Step 4 of 6 · Optional</div>
+    <h2 class="cw-question">When is your event?</h2>
+    <input class="cw-input" type="date" id="cw-date" name="event_date" />
+    <span class="cw-err" id="cw-date-err" aria-live="polite" aria-describedby="cw-date"></span>
+    <div class="cw-nav">
+      <button class="cw-back" id="cw-back-4" type="button">← Back</button>
+      <button class="cw-continue" id="cw-next-4" type="button">Continue</button>
+    </div>
+    <button class="cw-skip" id="cw-skip-4" type="button">Skip this step →</button>
+  </div>
+
+  <!-- Step 5: Guest count (optional) -->
+  <div class="cw-step" id="cw-step-5" style="display:none">
+    <button class="cw-exit" id="cw-exit-5" type="button" aria-label="Exit form">×</button>
+    <div class="cw-overline">Step 5 of 6 · Optional</div>
+    <h2 class="cw-question">How many guests?</h2>
+    <input class="cw-input" type="number" id="cw-guests" name="guest_count" placeholder="Est. guests" min="10" />
+    <span class="cw-err" id="cw-guests-err" aria-live="polite" aria-describedby="cw-guests"></span>
+    <div class="cw-nav">
+      <button class="cw-back" id="cw-back-5" type="button">← Back</button>
+      <button class="cw-continue" id="cw-next-5" type="button">Continue</button>
+    </div>
+    <button class="cw-skip" id="cw-skip-5" type="button">Skip this step →</button>
+  </div>
+
+  <!-- Step 6: Details (optional) -->
+  <div class="cw-step" id="cw-step-6" style="display:none">
+    <button class="cw-exit" id="cw-exit-6" type="button" aria-label="Exit form">×</button>
+    <div class="cw-overline">Step 6 of 6 · Optional</div>
+    <h2 class="cw-question">Tell us about your event</h2>
+    <textarea class="cw-input" id="cw-details" name="details" placeholder="Location, type of event, any special requests..." rows="4"></textarea>
+    <span class="cw-err" id="cw-details-err" aria-live="polite"></span>
+    <div class="cw-nav">
+      <button class="cw-back" id="cw-back-6" type="button">← Back</button>
+      <button class="cw-continue" id="cw-next-6" type="button">Continue</button>
+    </div>
+    <button class="cw-skip" id="cw-skip-6" type="button">Skip this step →</button>
+  </div>
+
+  <!-- Review screen -->
+  <div class="cw-step" id="cw-step-review" style="display:none">
+    <button class="cw-exit" id="cw-exit-review" type="button" aria-label="Exit form">×</button>
+    <div class="cw-overline">Almost there</div>
+    <h2 class="cw-question">Review Your Inquiry</h2>
+    <div class="cw-review-body" id="cw-review-body"></div>
+    <p class="cw-review-note" id="cw-review-note"></p>
+    <div class="cw-nav cw-nav--review">
+      <button class="cw-back" id="cw-back-review" type="button">← Back</button>
+      <button class="cw-submit" id="cw-submit" type="button">Send Inquiry</button>
+    </div>
+    <p class="cw-err" id="cw-submit-err" aria-live="polite"></p>
+  </div>
+
+  <!-- Success screen -->
+  <div class="cw-step cw-success" id="cw-step-success" style="display:none">
+    <div class="cw-success-icon">✓</div>
+    <h2 class="cw-success-title">INQUIRY SENT!</h2>
+    <p class="cw-success-body">We'll be in touch within 24 hours.<br>Questions? Call us at<br><strong>(360) 960-8405</strong></p>
+  </div>
+
+</div>
+
+<script>
+  // ── Shared helpers ──────────────────────────────────────────────────────────
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const PHONE_RE = /^\(\d{3}\) \d{3}-\d{4}$/;
+
+  function formatPhone(raw: string): string {
+    const digits = raw.replace(/\D/g, '').slice(0, 10);
+    if (digits.length < 4)  return digits;
+    if (digits.length < 7)  return `(${digits.slice(0,3)}) ${digits.slice(3)}`;
+    return `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6)}`;
+  }
+
+  function minDate48h(): string {
+    return new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString().split('T')[0];
+  }
+
+  // ── Desktop form ──────────────────────────────────────────────────────────
+  const desktopForm    = document.getElementById('catering-form') as HTMLFormElement | null;
+  const desktopSuccess = document.getElementById('ft-success');
+
+  const deskPhoneInput = document.getElementById('ft-phone') as HTMLInputElement | null;
+  deskPhoneInput?.addEventListener('input', () => {
+    const pos  = deskPhoneInput.selectionStart ?? 0;
+    const prev = deskPhoneInput.value;
+    deskPhoneInput.value = formatPhone(prev);
+    const diff = deskPhoneInput.value.length - prev.length;
+    deskPhoneInput.setSelectionRange(pos + diff, pos + diff);
+  });
+
+  desktopForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const emailEl  = desktopForm.querySelector<HTMLInputElement>('[name="email"]');
+    const emailErr = document.getElementById('ft-email-err');
+    const emailVal = emailEl?.value.trim() ?? '';
+    if (!EMAIL_RE.test(emailVal)) {
+      if (emailErr) emailErr.textContent = 'Please enter a valid email (e.g. you@email.com)';
+      emailEl?.classList.add('ft-input--error');
+      emailEl?.focus();
+      return;
+    }
+    if (emailErr) emailErr.textContent = '';
+    emailEl?.classList.remove('ft-input--error');
+
+    const phoneEl  = document.getElementById('ft-phone') as HTMLInputElement | null;
+    const phoneErr = document.getElementById('ft-phone-err');
+    const phoneVal = phoneEl?.value.trim() ?? '';
+    if (phoneVal && !PHONE_RE.test(phoneVal)) {
+      if (phoneErr) phoneErr.textContent = 'Please enter a 10-digit US phone number';
+      phoneEl?.classList.add('ft-input--error');
+      phoneEl?.focus();
+      return;
+    }
+    if (phoneErr) phoneErr.textContent = '';
+    phoneEl?.classList.remove('ft-input--error');
+
+    if (!desktopForm.action || desktopForm.action.includes('YOUR_FORM_ID') || desktopForm.dataset.pending === 'true') {
+      if (desktopSuccess) {
+        desktopSuccess.textContent = 'Online inquiries coming soon! Call us at (360) 960-8405';
+        desktopSuccess.style.display = 'block';
+      }
+      return;
+    }
+
+    const data = new FormData(desktopForm);
+    try {
+      const res = await fetch(desktopForm.action, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+      if (res.ok) {
+        if (desktopSuccess) desktopSuccess.style.display = 'block';
+        desktopForm.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLButtonElement>(
+          'input, textarea, button[type=submit]'
+        ).forEach(el => { el.disabled = true; });
+      } else {
+        if (desktopSuccess) {
+          desktopSuccess.textContent = 'Something went wrong. Please call us at (360) 960-8405.';
+          desktopSuccess.style.display = 'block';
+        }
+      }
+    } catch {
+      if (desktopSuccess) {
+        desktopSuccess.textContent = 'Something went wrong. Please call us at (360) 960-8405.';
+        desktopSuccess.style.display = 'block';
+      }
+    }
+  });
+
+  // ── Mobile wizard ─────────────────────────────────────────────────────────
+  const intro    = document.getElementById('catering-mobile-intro');
+  const wizard   = document.getElementById('catering-wizard');
+  const cmiStart = document.getElementById('cmi-start');
+
+  type WizardState = {
+    name: string; email: string; phone: string;
+    event_date: string; guest_count: string; details: string;
+  };
+
+  let state: WizardState = { name: '', email: '', phone: '', event_date: '', guest_count: '', details: '' };
+
+  const STEPS = ['1','2','3','4','5','6','review','success'] as const;
+
+  const dateInput = document.getElementById('cw-date') as HTMLInputElement | null;
+  if (dateInput) dateInput.min = minDate48h();
+
+  const wizPhoneInput = document.getElementById('cw-phone') as HTMLInputElement | null;
+  wizPhoneInput?.addEventListener('input', () => {
+    const pos  = wizPhoneInput.selectionStart ?? 0;
+    const prev = wizPhoneInput.value;
+    wizPhoneInput.value = formatPhone(prev);
+    const diff = wizPhoneInput.value.length - prev.length;
+    wizPhoneInput.setSelectionRange(pos + diff, pos + diff);
+  });
+
+  function showIntro(): void {
+    if (intro)  intro.style.display  = '';
+    if (wizard) wizard.style.display = 'none';
+  }
+
+  function showWizard(): void {
+    if (intro)  intro.style.display  = 'none';
+    if (wizard) wizard.style.display = 'block';
+  }
+
+  function goToStep(step: string): void {
+    STEPS.forEach(s => {
+      const el = document.getElementById(`cw-step-${s}`);
+      if (el) el.style.display = s === step ? '' : 'none';
+    });
+    updateDots(step);
+    const stepEl     = document.getElementById(`cw-step-${step}`);
+    const firstInput = stepEl?.querySelector<HTMLElement>('input, textarea');
+    firstInput?.focus();
+  }
+
+  function updateDots(step: string): void {
+    const dots = document.querySelectorAll<HTMLElement>('.cw-dot');
+    const idx  = parseInt(step, 10) - 1;
+    dots.forEach((dot, i) => {
+      dot.classList.remove('done', 'active');
+      if (isNaN(idx) || i < idx) dot.classList.add('done');
+      else if (i === idx)        dot.classList.add('active');
+    });
+  }
+
+  function setErr(id: string, msg: string): void {
+    const el = document.getElementById(id);
+    if (el) el.textContent = msg;
+  }
+
+  function clearErr(id: string): void { setErr(id, ''); }
+
+  function setInputError(inputId: string, hasError: boolean): void {
+    const el = document.getElementById(inputId);
+    if (!el) return;
+    if (hasError) el.classList.add('cw-input--error');
+    else          el.classList.remove('cw-input--error');
+  }
+
+  function buildReview(): void {
+    const body = document.getElementById('cw-review-body');
+    if (!body) return;
+    body.textContent = '';
+
+    const dateDisplay = state.event_date
+      ? new Date(state.event_date + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+      : '—';
+
+    const rows: { label: string; value: string; step: string }[] = [
+      { label: 'Name',    value: state.name        || '—', step: '1' },
+      { label: 'Email',   value: state.email       || '—', step: '2' },
+      { label: 'Phone',   value: state.phone       || '—', step: '3' },
+      { label: 'Date',    value: dateDisplay,               step: '4' },
+      { label: 'Guests',  value: state.guest_count ? `${state.guest_count} guests` : '—', step: '5' },
+      { label: 'Details', value: state.details     || '—', step: '6' },
+    ];
+
+    rows.forEach(r => {
+      const row = document.createElement('div');
+      row.className = 'cw-review-row';
+
+      const field = document.createElement('span');
+      field.className  = 'cw-review-field';
+      field.textContent = r.label;
+
+      const val = document.createElement('span');
+      val.className  = 'cw-review-val';
+      val.textContent = r.value;
+
+      const btn = document.createElement('button');
+      btn.className  = 'cw-review-edit';
+      btn.type       = 'button';
+      btn.textContent = 'Edit';
+      const targetStep = r.step;
+      btn.addEventListener('click', () => goToStep(targetStep));
+
+      row.appendChild(field);
+      row.appendChild(val);
+      row.appendChild(btn);
+      body.appendChild(row);
+    });
+
+    const note = document.getElementById('cw-review-note');
+    if (note) note.textContent = `We'll reply within 24 hrs at ${state.email}`;
+  }
+
+  function resetWizard(): void {
+    state = { name: '', email: '', phone: '', event_date: '', guest_count: '', details: '' };
+    const fields = [
+      { id: 'cw-name',    errId: 'cw-name-err'    },
+      { id: 'cw-email',   errId: 'cw-email-err'   },
+      { id: 'cw-phone',   errId: 'cw-phone-err'   },
+      { id: 'cw-date',    errId: 'cw-date-err'    },
+      { id: 'cw-guests',  errId: 'cw-guests-err'  },
+      { id: 'cw-details', errId: 'cw-details-err' },
+    ];
+    fields.forEach(({ id, errId }) => {
+      const el = document.getElementById(id) as HTMLInputElement | null;
+      if (el) el.value = '';
+      clearErr(errId);
+      setInputError(id, false);
+    });
+    clearErr('cw-submit-err');
+    if (dateInput) dateInput.min = minDate48h();
+  }
+
+  // ── Exit buttons ────────────────────────────────────────────────────────────
+  ['1','2','3','4','5','6','review'].forEach(step => {
+    document.getElementById(`cw-exit-${step}`)?.addEventListener('click', () => {
+      resetWizard();
+      goToStep('1');
+      showIntro();
+    });
+  });
+
+  // ── Start button ────────────────────────────────────────────────────────────
+  cmiStart?.addEventListener('click', () => {
+    showWizard();
+    goToStep('1');
+  });
+
+  // ── Step 1: Name ─────────────────────────────────────────────────────────────
+  document.getElementById('cw-next-1')?.addEventListener('click', () => {
+    const el  = document.getElementById('cw-name') as HTMLInputElement | null;
+    const val = el?.value.trim() ?? '';
+    if (!val) {
+      setErr('cw-name-err', 'Please enter your name');
+      setInputError('cw-name', true);
+      el?.focus();
+      return;
+    }
+    clearErr('cw-name-err');
+    setInputError('cw-name', false);
+    state.name = val;
+    goToStep('2');
+  });
+
+  // ── Step 2: Email ─────────────────────────────────────────────────────────────
+  document.getElementById('cw-next-2')?.addEventListener('click', () => {
+    const el  = document.getElementById('cw-email') as HTMLInputElement | null;
+    const val = el?.value.trim() ?? '';
+    if (!EMAIL_RE.test(val)) {
+      setErr('cw-email-err', 'Please enter a valid email (e.g. you@email.com)');
+      setInputError('cw-email', true);
+      el?.focus();
+      return;
+    }
+    clearErr('cw-email-err');
+    setInputError('cw-email', false);
+    state.email = val;
+    goToStep('3');
+  });
+
+  document.getElementById('cw-back-2')?.addEventListener('click', () => goToStep('1'));
+
+  // ── Step 3: Phone ─────────────────────────────────────────────────────────────
+  document.getElementById('cw-next-3')?.addEventListener('click', () => {
+    const el  = document.getElementById('cw-phone') as HTMLInputElement | null;
+    const val = el?.value.trim() ?? '';
+    if (!PHONE_RE.test(val)) {
+      setErr('cw-phone-err', 'Please enter a 10-digit US phone number');
+      setInputError('cw-phone', true);
+      el?.focus();
+      return;
+    }
+    clearErr('cw-phone-err');
+    setInputError('cw-phone', false);
+    state.phone = val;
+    goToStep('4');
+  });
+
+  document.getElementById('cw-back-3')?.addEventListener('click', () => goToStep('2'));
+
+  // ── Step 4: Date (optional) ───────────────────────────────────────────────────
+  document.getElementById('cw-next-4')?.addEventListener('click', () => {
+    const el  = document.getElementById('cw-date') as HTMLInputElement | null;
+    const val = el?.value ?? '';
+    if (val && val < minDate48h()) {
+      setErr('cw-date-err', 'Please choose a date at least 48 hours from now');
+      setInputError('cw-date', true);
+      el?.focus();
+      return;
+    }
+    clearErr('cw-date-err');
+    setInputError('cw-date', false);
+    state.event_date = val;
+    goToStep('5');
+  });
+
+  document.getElementById('cw-skip-4')?.addEventListener('click', () => { state.event_date = ''; goToStep('5'); });
+  document.getElementById('cw-back-4')?.addEventListener('click', () => goToStep('3'));
+
+  // ── Step 5: Guest count (optional) ────────────────────────────────────────────
+  document.getElementById('cw-next-5')?.addEventListener('click', () => {
+    const el  = document.getElementById('cw-guests') as HTMLInputElement | null;
+    const val = el?.value.trim() ?? '';
+    if (val && parseInt(val, 10) < 10) {
+      setErr('cw-guests-err', 'Minimum guest count is 10');
+      setInputError('cw-guests', true);
+      el?.focus();
+      return;
+    }
+    clearErr('cw-guests-err');
+    setInputError('cw-guests', false);
+    state.guest_count = val;
+    goToStep('6');
+  });
+
+  document.getElementById('cw-skip-5')?.addEventListener('click', () => { state.guest_count = ''; goToStep('6'); });
+  document.getElementById('cw-back-5')?.addEventListener('click', () => goToStep('4'));
+
+  // ── Step 6: Details (optional) ────────────────────────────────────────────────
+  document.getElementById('cw-next-6')?.addEventListener('click', () => {
+    const el = document.getElementById('cw-details') as HTMLTextAreaElement | null;
+    state.details = el?.value.trim() ?? '';
+    buildReview();
+    goToStep('review');
+  });
+
+  document.getElementById('cw-skip-6')?.addEventListener('click', () => { state.details = ''; buildReview(); goToStep('review'); });
+  document.getElementById('cw-back-6')?.addEventListener('click', () => goToStep('5'));
+
+  // ── Review ─────────────────────────────────────────────────────────────────────
+  document.getElementById('cw-back-review')?.addEventListener('click', () => goToStep('6'));
+
+  // ── Submit ─────────────────────────────────────────────────────────────────────
+  document.getElementById('cw-submit')?.addEventListener('click', async () => {
+    clearErr('cw-submit-err');
+    const submitBtn = document.getElementById('cw-submit') as HTMLButtonElement | null;
+
+    const action = (document.getElementById('catering-form') as HTMLFormElement | null)?.action ?? '';
+    if (!action || action.includes('YOUR_FORM_ID') || desktopForm?.dataset.pending === 'true') {
+      goToStep('success');
+      return;
+    }
+
+    if (submitBtn) submitBtn.disabled = true;
+
+    const data = new FormData();
+    data.append('name',  state.name);
+    data.append('email', state.email);
+    data.append('phone', state.phone);
+    if (state.event_date)  data.append('event_date',  state.event_date);
+    if (state.guest_count) data.append('guest_count', state.guest_count);
+    if (state.details)     data.append('details',     state.details);
+
+    try {
+      const res = await fetch(action, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+      if (res.ok) {
+        goToStep('success');
+      } else {
+        setErr('cw-submit-err', 'Something went wrong. Please call us at (360) 960-8405.');
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    } catch {
+      setErr('cw-submit-err', 'Something went wrong. Please call us at (360) 960-8405.');
+      if (submitBtn) submitBtn.disabled = false;
+    }
+  });
+</script>
