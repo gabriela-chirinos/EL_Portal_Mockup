@@ -20,11 +20,10 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 24 # Using the version your error suggested
+          node-version: 22 # THIS UPDATES YOUR NODE VERSION TO MEET ASTRO'S REQUIREMENTS
 
       - name: Install dependencies
-        # This will work even if you don't have a lock file
-        run: npm install 
+        run: npm install
 
       - name: Build Astro
         run: npm run build
@@ -32,7 +31,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist # Astro's default build folder
+          path: ./dist
 
   deploy:
     needs: build
