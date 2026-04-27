@@ -1,13 +1,10 @@
 name: Deploy to GitHub Pages
 
 on:
-  # Trigger the workflow every time you push to the main branch
   push:
     branches: [main]
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Allow this job to clone the repo and create a page deployment
 permissions:
   contents: read
   pages: write
@@ -17,12 +14,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout your repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install, build, and upload Astro site
-        uses: withastro/action@v3
-        # If you are using pnpm or yarn, the action will auto-detect it.
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24 # Using the version your error suggested
+
+      - name: Install dependencies
+        # This will work even if you don't have a lock file
+        run: npm install 
+
+      - name: Build Astro
+        run: npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist # Astro's default build folder
 
   deploy:
     needs: build
