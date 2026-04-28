@@ -17,7 +17,7 @@ export const menuData: MenuCategory[] = [
   {
     id: 'birria',
     label: 'BIRRIA',
-    featuredImage: '/assets/quesabiria.png',
+    featuredImage: 'assets/quesabiria.png',
     featuredCaption: 'Slow-Cooked Pulled Tender Beef',
     items: [
       { name: 'QUESABIRRIA', badge: { label: 'Classic' }, desc: 'Large handmade tortilla, melted crispy cheese, cilantro & onion. Served with consomé.', price: '$6.99' },
@@ -53,7 +53,7 @@ export const menuData: MenuCategory[] = [
   {
     id: 'menudo',
     label: 'MENUDO',
-    featuredImage: '/assets/soup_pic.jpg',
+    featuredImage: 'assets/soup_pic.jpg',
     featuredCaption: 'Menudo Rojo · Slow-Simmered',
     items: [
       { name: 'MENUDO ROJO', badge: { label: 'PNW Famous' }, desc: 'Traditional red menudo with hominy, cilantro, onion & handmade tortillas. Small or large.', price: '$12.99' },
@@ -64,7 +64,7 @@ export const menuData: MenuCategory[] = [
   {
     id: 'dulces',
     label: 'PAN DULCE',
-    featuredImage: '/assets/pandulce.png',
+    featuredImage: 'assets/pandulce.png',
     featuredCaption: 'La Panadería · Sweet Treats',
     items: [
       { name: 'LA CONCHA', badge: { label: 'Classic', variant: 'yellow' }, desc: "The iconic Mexican sweet bread — soft, fluffy, with a crisp sugar shell. Ask for today's flavors.", price: '$2.50' },

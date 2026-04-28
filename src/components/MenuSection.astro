@@ -34,7 +34,7 @@ import { menuData } from '../data/menu.ts';
       <div class={`mpanel-inner${!cat.featuredImage ? ' mpanel-full' : ''}`}>
         {cat.featuredImage && (
           <div class="mpanel-featured">
-            <img src={cat.featuredImage} alt={cat.featuredCaption} class="mpanel-img" />
+            <img src={`${import.meta.env.BASE_URL}${cat.featuredImage}`} alt={cat.featuredCaption} class="mpanel-img" />
             <div class="mpanel-img-caption">
               <span class="mcat-label">{cat.featuredCaption}</span>
             </div>

@@ -2,7 +2,7 @@
 ---
 <nav id="main-nav">
   <a href="/" class="nav-logo-img">
-    <img src="/assets/svgLogo.svg" alt="El Portal Yelm" height="40" />
+    <img src={`${import.meta.env.BASE_URL}assets/svgLogo.svg`} alt="El Portal Yelm" height="40" />
   </a>
   <ul class="nav-links">
     <li><a href="#menu">Menu</a></li>
@@ -42,7 +42,7 @@
   <div class="nmo-inner">
     <div class="nmo-header">
       <a href="/" class="nmo-logo-link" id="nmo-logo">
-        <img src="/assets/svgLogo.svg" alt="El Portal Yelm" height="36" />
+        <img src={`${import.meta.env.BASE_URL}assets/svgLogo.svg`} alt="El Portal Yelm" height="36" />
       </a>
       <button class="nmo-close" id="nmo-close" type="button" aria-label="Close navigation">
         <svg width="20" height="20" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
